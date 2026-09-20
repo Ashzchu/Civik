@@ -1,0 +1,212 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1280" width="100%" height="100%">
+  <defs>
+    <!-- Color Gradients -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F0F4FF"/>
+      <stop offset="50%" stop-color="#E0E7FF"/>
+      <stop offset="100%" stop-color="#EEF2FF"/>
+    </linearGradient>
+
+    <linearGradient id="primaryGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+
+    <linearGradient id="coralGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F43F5E"/>
+      <stop offset="100%" stop-color="#E11D48"/>
+    </linearGradient>
+
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#D97706"/>
+    </linearGradient>
+
+    <linearGradient id="greenGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+
+    <linearGradient id="cardBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F8FAFC"/>
+    </linearGradient>
+
+    <linearGradient id="streakBg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFF7ED"/>
+      <stop offset="100%" stop-color="#FFEDD5"/>
+    </linearGradient>
+
+    <!-- Clay Shadows -->
+    <filter id="clayShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#0F172A" flood-opacity="0.08"/>
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.04"/>
+    </filter>
+
+    <filter id="glowBlue" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#2563EB" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Phone Screen Background -->
+  <rect width="720" height="1280" fill="url(#bgGrad)"/>
+
+  <!-- Top Status Bar -->
+  <rect width="720" height="50" fill="rgba(255,255,255,0.6)"/>
+  <text x="50" y="34" font-family="'Nunito', sans-serif" font-weight="800" font-size="18" fill="#1E293B">9:41</text>
+  <g transform="translate(620, 18)">
+    <!-- Battery / Wifi icons -->
+    <path d="M 0,14 L 6,14 L 6,6 L 0,6 Z M 10,14 L 16,14 L 16,3 L 10,3 Z M 20,14 L 26,14 L 26,0 L 20,0 Z" fill="#1E293B"/>
+  </g>
+
+  <!-- App Header -->
+  <g transform="translate(40, 70)">
+    <!-- User Profile Avatar & Greeting -->
+    <circle cx="36" cy="36" r="36" fill="#DBEAFE"/>
+    <text x="36" y="44" font-size="32" text-anchor="middle">👦</text>
+
+    <text x="90" y="28" font-family="'Nunito', sans-serif" font-weight="700" font-size="16" fill="#64748B">Welcome back,</text>
+    <text x="90" y="54" font-family="'Fredoka', sans-serif" font-weight="700" font-size="26" fill="#1E293B">Alex River 👋</text>
+
+    <!-- CP Pill & Level Badges -->
+    <g transform="translate(440, 10)">
+      <rect width="200" height="52" rx="26" fill="#FFFFFF" filter="url(#clayShadow)"/>
+      <circle cx="28" cy="26" r="18" fill="#FEF3C7"/>
+      <text x="28" y="32" font-size="18" text-anchor="middle">🪙</text>
+      <text x="56" y="33" font-family="'Fredoka', sans-serif" font-weight="700" font-size="22" fill="#D97706">2,450</text>
+      <text x="140" y="33" font-family="'Nunito', sans-serif" font-weight="800" font-size="16" fill="#64748B">CP</text>
+    </g>
+  </g>
+
+  <!-- Daily Quest Streak Banner (Clay Card) -->
+  <g transform="translate(40, 175)" filter="url(#clayShadow)">
+    <rect width="640" height="150" rx="30" fill="url(#streakBg)" stroke="#FFEDD5" stroke-width="2"/>
+    <g transform="translate(30, 30)">
+      <!-- Flame Badge -->
+      <circle cx="36" cy="36" r="36" fill="#FFD700"/>
+      <text x="36" y="44" font-size="34" text-anchor="middle">🔥</text>
+
+      <text x="90" y="28" font-family="'Fredoka', sans-serif" font-weight="700" font-size="24" fill="#C2410C">7-Day Quest Streak!</text>
+      <text x="90" y="52" font-family="'Nunito', sans-serif" font-weight="700" font-size="16" fill="#EA580C">2.5x CP Multiplier Active · Campus #1 Contender</text>
+
+      <!-- Progress Bar -->
+      <rect x="0" y="70" width="580" height="14" rx="7" fill="#FED7AA"/>
+      <rect x="0" y="70" width="420" height="14" rx="7" fill="url(#coralGrad)"/>
+    </g>
+  </g>
+
+  <!-- Section Title: Daily Quest Hub -->
+  <g transform="translate(40, 365)">
+    <text x="0" y="0" font-family="'Fredoka', sans-serif" font-weight="700" font-size="28" fill="#1E293B">Daily Quest Hub 🎯</text>
+    <text x="440" y="-2" font-family="'Nunito', sans-serif" font-weight="800" font-size="16" fill="#2563EB">Refresh in 14h</text>
+  </g>
+
+  <!-- Quest Card 1: Litter Cleanup (Completed) -->
+  <g transform="translate(40, 390)" filter="url(#clayShadow)">
+    <rect width="640" height="160" rx="28" fill="url(#cardBg)" stroke="#E2E8F0" stroke-width="2"/>
+    
+    <!-- Icon Pill -->
+    <rect x="24" y="24" width="70" height="70" rx="22" fill="#DBEAFE"/>
+    <text x="59" y="68" font-size="36" text-anchor="middle">🧹</text>
+
+    <!-- Details -->
+    <text x="114" y="52" font-family="'Fredoka', sans-serif" font-weight="700" font-size="22" fill="#1E293B">Campus Litter Cleanup</text>
+    <text x="114" y="78" font-family="'Nunito', sans-serif" font-weight="700" font-size="16" fill="#64748B">Snap photo of cleared litter · Gemini AI Verified</text>
+    <text x="114" y="104" font-family="'Nunito', sans-serif" font-weight="800" font-size="15" fill="#10B981">✓ Completed Today · +50 CP Earned</text>
+
+    <!-- Action Badge -->
+    <g transform="translate(490, 48)">
+      <rect width="126" height="46" rx="23" fill="#D1FAE5"/>
+      <text x="63" y="28" font-family="'Fredoka', sans-serif" font-weight="700" font-size="16" fill="#059669" text-anchor="middle">✓ Claimed</text>
+    </g>
+  </g>
+
+  <!-- Quest Card 2: Report Pothole (In Progress) -->
+  <g transform="translate(40, 570)" filter="url(#clayShadow)">
+    <rect width="640" height="160" rx="28" fill="url(#cardBg)" stroke="#E2E8F0" stroke-width="2"/>
+    
+    <!-- Icon Pill -->
+    <rect x="24" y="24" width="70" height="70" rx="22" fill="#FEE2E2"/>
+    <text x="59" y="68" font-size="36" text-anchor="middle">🕳️</text>
+
+    <!-- Details -->
+    <text x="114" y="52" font-family="'Fredoka', sans-serif" font-weight="700" font-size="22" fill="#1E293B">Report Road Pothole</text>
+    <text x="114" y="78" font-family="'Nunito', sans-serif" font-weight="700" font-size="16" fill="#64748B">GPS Geo-tag road hazard · Instant dispatch</text>
+    <text x="114" y="104" font-family="'Nunito', sans-serif" font-weight="800" font-size="15" fill="#F43F5E">🔥 2.5x CP Multiplier (+100 CP)</text>
+
+    <!-- Action Button -->
+    <g transform="translate(480, 48)" filter="url(#glowBlue)">
+      <rect width="136" height="48" rx="24" fill="url(#coralGrad)"/>
+      <text x="68" y="30" font-family="'Fredoka', sans-serif" font-weight="700" font-size="17" fill="#FFFFFF" text-anchor="middle">Start Quest 🚀</text>
+    </g>
+  </g>
+
+  <!-- Quest Card 3: Help Stray Animal -->
+  <g transform="translate(40, 750)" filter="url(#clayShadow)">
+    <rect width="640" height="160" rx="28" fill="url(#cardBg)" stroke="#E2E8F0" stroke-width="2"/>
+    
+    <!-- Icon Pill -->
+    <rect x="24" y="24" width="70" height="70" rx="22" fill="#FEF3C7"/>
+    <text x="59" y="68" font-size="36" text-anchor="middle">🐾</text>
+
+    <!-- Details -->
+    <text x="114" y="52" font-family="'Fredoka', sans-serif" font-weight="700" font-size="22" fill="#1E293B">Stray Animal Care</text>
+    <text x="114" y="78" font-family="'Nunito', sans-serif" font-weight="700" font-size="16" fill="#64748B">Provide water/food or report rescue need</text>
+    <text x="114" y="104" font-family="'Nunito', sans-serif" font-weight="800" font-size="15" fill="#D97706">⭐ Hero Quest (+200 CP)</text>
+
+    <!-- Action Button -->
+    <g transform="translate(480, 48)">
+      <rect width="136" height="48" rx="24" fill="url(#primaryGrad)"/>
+      <text x="68" y="30" font-family="'Fredoka', sans-serif" font-weight="700" font-size="17" fill="#FFFFFF" text-anchor="middle">Start Quest 🚀</text>
+    </g>
+  </g>
+
+  <!-- Campus Leaderboard Snippet -->
+  <g transform="translate(40, 935)" filter="url(#clayShadow)">
+    <rect width="640" height="150" rx="28" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+    <g transform="translate(30, 25)">
+      <text x="0" y="22" font-family="'Fredoka', sans-serif" font-weight="700" font-size="22" fill="#1E293B">🏆 Campus League Rank</text>
+      <text x="580" y="22" font-family="'Nunito', sans-serif" font-weight="800" font-size="16" stroke-linecap="round" fill="#2563EB" text-anchor="end">View All →</text>
+
+      <g transform="translate(0, 45)">
+        <rect width="580" height="54" rx="16" fill="#DBEAFE"/>
+        <text x="24" y="33" font-family="'Fredoka', sans-serif" font-weight="700" font-size="20" fill="#2563EB">#1</text>
+        <circle cx="70" cy="27" r="18" fill="#3B82F6"/>
+        <text x="70" y="33" font-size="16" text-anchor="middle" fill="#FFFFFF">👦</text>
+        <text x="104" y="33" font-family="'Nunito', sans-serif" font-weight="800" font-size="18" fill="#1E293B">Alex River (You)</text>
+        <text x="556" y="33" font-family="'Fredoka', sans-serif" font-weight="700" font-size="18" fill="#D97706" text-anchor="end">2,450 CP 🪙</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Bottom Floating Navbar -->
+  <g transform="translate(40, 1140)" filter="url(#clayShadow)">
+    <rect width="640" height="90" rx="45" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
+
+    <!-- Nav Item 1: Home (Active) -->
+    <g transform="translate(80, 45)">
+      <circle cx="0" cy="-6" r="26" fill="url(#primaryGrad)"/>
+      <text x="0" y="2" font-size="22" text-anchor="middle" fill="#FFFFFF">🏠</text>
+      <text x="0" y="32" font-family="'Nunito', sans-serif" font-weight="800" font-size="13" fill="#2563EB" text-anchor="middle">Home</text>
+    </g>
+
+    <!-- Nav Item 2: Map -->
+    <g transform="translate(240, 45)">
+      <text x="0" y="-2" font-size="24" text-anchor="middle">📍</text>
+      <text x="0" y="26" font-family="'Nunito', sans-serif" font-weight="700" font-size="13" fill="#64748B" text-anchor="middle">Map</text>
+    </g>
+
+    <!-- Nav Item 3: Leagues -->
+    <g transform="translate(400, 45)">
+      <text x="0" y="-2" font-size="24" text-anchor="middle">🏆</text>
+      <text x="0" y="26" font-family="'Nunito', sans-serif" font-weight="700" font-size="13" fill="#64748B" text-anchor="middle">Leagues</text>
+    </g>
+
+    <!-- Nav Item 4: Profile -->
+    <g transform="translate(560, 45)">
+      <text x="0" y="-2" font-size="24" text-anchor="middle">👤</text>
+      <text x="0" y="26" font-family="'Nunito', sans-serif" font-weight="700" font-size="13" fill="#64748B" text-anchor="middle">Profile</text>
+    </g>
+  </g>
+
+</svg>
