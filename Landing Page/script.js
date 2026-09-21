@@ -119,9 +119,9 @@ function generateBackgroundEmojis() {
       for (let i = 0; i < obstacles.length; i++) {
         const obs = obstacles[i];
         if (!(emojiBox.right < obs.left ||
-              emojiBox.left > obs.right ||
-              emojiBox.bottom < obs.top ||
-              emojiBox.top > obs.bottom)) {
+          emojiBox.left > obs.right ||
+          emojiBox.bottom < obs.top ||
+          emojiBox.top > obs.bottom)) {
           collides = true;
           break;
         }
@@ -183,9 +183,183 @@ function initOnce() {
   generateBackgroundEmojis();
 }
 
+// ===== Camera 3D Tilt Tracking for Phone Mockup =====
+function initCameraTilt() {
+  const heroVisual = document.querySelector('.hero-visual');
+  const phoneWrapper = document.querySelector('.phone-mockup-wrapper');
+  if (!heroVisual || !phoneWrapper) return;
+
+  const defaultRotateY = -6;
+  const defaultRotateX = 3;
+  const maxTilt = 15; // Maximum angle of rotation
+
+  let isHovered = false;
+  let targetRotateX = defaultRotateX;
+  let targetRotateY = defaultRotateY;
+  let currentRotateX = defaultRotateX;
+  let currentRotateY = defaultRotateY;
+  let animFrameId = null;
+
+  let cachedCenterX = 0;
+  let cachedCenterY = 0;
+  let boundWidth = 200;
+  let boundHeight = 300;
+
+  function updateBounds() {
+    const rect = phoneWrapper.getBoundingClientRect();
+    cachedCenterX = rect.left + rect.width / 2;
+    cachedCenterY = rect.top + rect.height / 2;
+    boundWidth = Math.max(rect.width * 0.9, 180);
+    boundHeight = Math.max(rect.height * 0.9, 260);
+  }
+
+  function updateCameraTilt() {
+    // Smooth camera gimbal lerp for fluid tracking
+    const ease = 0.12;
+    currentRotateX += (targetRotateX - currentRotateX) * ease;
+    currentRotateY += (targetRotateY - currentRotateY) * ease;
+
+    phoneWrapper.style.transform = `perspective(1000px) rotateX(${currentRotateX.toFixed(2)}deg) rotateY(${currentRotateY.toFixed(2)}deg)`;
+
+    const diffX = Math.abs(targetRotateX - currentRotateX);
+    const diffY = Math.abs(targetRotateY - currentRotateY);
+
+    if (isHovered || diffX > 0.02 || diffY > 0.02) {
+      animFrameId = requestAnimationFrame(updateCameraTilt);
+    } else {
+      currentRotateX = targetRotateX;
+      currentRotateY = targetRotateY;
+      phoneWrapper.style.transform = `perspective(1000px) rotateX(${targetRotateX}deg) rotateY(${targetRotateY}deg)`;
+      animFrameId = null;
+    }
+  }
+
+  function handleMouseMove(e) {
+    const deltaX = e.clientX - cachedCenterX;
+    const deltaY = e.clientY - cachedCenterY;
+
+    const normX = Math.max(-1, Math.min(1, deltaX / boundWidth));
+    const normY = Math.max(-1, Math.min(1, deltaY / boundHeight));
+
+    // Camera tilt towards cursor:
+    // Cursor to right (normX > 0) -> pan right (rotateY > 0)
+    // Cursor to left (normX < 0) -> pan left (rotateY < 0)
+    // Cursor above (normY < 0) -> tilt up (rotateX > 0)
+    // Cursor below (normY > 0) -> tilt down (rotateX < 0)
+    targetRotateX = -normY * maxTilt;
+    targetRotateY = normX * maxTilt;
+
+    if (!animFrameId) {
+      animFrameId = requestAnimationFrame(updateCameraTilt);
+    }
+  }
+
+  heroVisual.addEventListener('mouseenter', (e) => {
+    isHovered = true;
+    updateBounds();
+    handleMouseMove(e);
+  });
+
+  heroVisual.addEventListener('mousemove', handleMouseMove);
+
+  heroVisual.addEventListener('mouseleave', () => {
+    isHovered = false;
+    targetRotateX = defaultRotateX;
+    targetRotateY = defaultRotateY;
+    if (!animFrameId) {
+      animFrameId = requestAnimationFrame(updateCameraTilt);
+    }
+  });
+
+  window.addEventListener('scroll', () => {
+    if (isHovered) updateBounds();
+  }, { passive: true });
+
+  window.addEventListener('resize', () => {
+    updateBounds();
+  });
+
+  updateBounds();
+  window.addEventListener('load', updateBounds);
+}
+
+// ===== Smooth Anchor Scrolling =====
+function initSmoothScroll() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href');
+      if (!targetId || targetId === '#') return;
+      const targetEl = document.querySelector(targetId);
+      if (targetEl) {
+        e.preventDefault();
+        const headerOffset = 85;
+        const elementPosition = targetEl.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: Math.max(0, offsetPosition),
+          behavior: 'smooth'
+        });
+
+        if (history.pushState) {
+          history.pushState(null, null, targetId);
+        }
+      }
+    });
+  });
+}
+
+// ===== Auth Modal Handler =====
+function initAuthModal() {
+  const modal = document.getElementById('auth-modal');
+  const closeBtn = document.getElementById('closeAuthModal');
+  const signInBtns = document.querySelectorAll('a, button');
+
+  if (!modal) return;
+
+  function openModal(e) {
+    if (e) e.preventDefault();
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  signInBtns.forEach(btn => {
+    const text = btn.innerText ? btn.innerText.trim().toLowerCase() : '';
+    if (text === 'sign in' || text === 'signin') {
+      btn.addEventListener('click', openModal);
+    }
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeModal);
+  }
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(initOnce, 150);
   window.addEventListener('load', initOnce);
+  initCameraTilt();
+  initSmoothScroll();
+  initAuthModal();
 
   // Smooth RequestAnimationFrame Parallax Scroll
   let ticking = false;
