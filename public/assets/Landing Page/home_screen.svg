@@ -87,7 +87,7 @@
       <text x="36" y="44" font-size="34" text-anchor="middle">🔥</text>
 
       <text x="90" y="28" font-family="'Fredoka', sans-serif" font-weight="700" font-size="24" fill="#C2410C">7-Day Quest Streak!</text>
-      <text x="90" y="52" font-family="'Nunito', sans-serif" font-weight="700" font-size="16" fill="#EA580C">2.5x CP Multiplier Active · Campus #1 Contender</text>
+      <text x="90" y="52" font-family="'Nunito', sans-serif" font-weight="700" font-size="16" fill="#EA580C">2.5x CP Multiplier Active · City #1 Contender</text>
 
       <!-- Progress Bar -->
       <rect x="0" y="70" width="580" height="14" rx="7" fill="#FED7AA"/>
@@ -110,7 +110,7 @@
     <text x="59" y="68" font-size="36" text-anchor="middle">🧹</text>
 
     <!-- Details -->
-    <text x="114" y="52" font-family="'Fredoka', sans-serif" font-weight="700" font-size="22" fill="#1E293B">Campus Litter Cleanup</text>
+    <text x="114" y="52" font-family="'Fredoka', sans-serif" font-weight="700" font-size="22" fill="#1E293B">City Park Cleanup</text>
     <text x="114" y="78" font-family="'Nunito', sans-serif" font-weight="700" font-size="16" fill="#64748B">Snap photo of cleared litter · Gemini AI Verified</text>
     <text x="114" y="104" font-family="'Nunito', sans-serif" font-weight="800" font-size="15" fill="#10B981">✓ Completed Today · +50 CP Earned</text>
 
@@ -161,11 +161,11 @@
     </g>
   </g>
 
-  <!-- Campus Leaderboard Snippet -->
+  <!-- City Leaderboard Snippet -->
   <g transform="translate(40, 935)" filter="url(#clayShadow)">
     <rect width="640" height="150" rx="28" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"/>
     <g transform="translate(30, 25)">
-      <text x="0" y="22" font-family="'Fredoka', sans-serif" font-weight="700" font-size="22" fill="#1E293B">🏆 Campus League Rank</text>
+      <text x="0" y="22" font-family="'Fredoka', sans-serif" font-weight="700" font-size="22" fill="#1E293B">🏆 City League Rank</text>
       <text x="580" y="22" font-family="'Nunito', sans-serif" font-weight="800" font-size="16" stroke-linecap="round" fill="#2563EB" text-anchor="end">View All →</text>
 
       <g transform="translate(0, 45)">
