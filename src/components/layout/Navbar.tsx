@@ -5,9 +5,10 @@ import { useAuth } from "@/context/AuthContext";
 
 interface NavbarProps {
   onOpenAuth: (mode: "signin" | "signup") => void;
+  onReturnToDashboard?: () => void;
 }
 
-export default function Navbar({ onOpenAuth }: NavbarProps) {
+export default function Navbar({ onOpenAuth, onReturnToDashboard }: NavbarProps) {
   const { user, loading, signOut } = useAuth();
 
   const displayName = user?.name || user?.email?.split("@")[0] || "Citizen";
@@ -41,6 +42,20 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
         <div className="nav-actions">
           {!loading && user ? (
             <>
+              {onReturnToDashboard && (
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  style={{
+                    padding: "8px 16px",
+                    fontSize: "13px",
+                    background: "linear-gradient(135deg, #14b8a6, #0284c7)",
+                  }}
+                  onClick={onReturnToDashboard}
+                >
+                  Sanctuary 🛶
+                </button>
+              )}
               <div className="nav-user-pill" title={user.email || ""}>
                 <div className="nav-user-avatar">{userInitial}</div>
                 <span className="nav-user-name">{displayName}</span>
