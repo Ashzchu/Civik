@@ -10,16 +10,9 @@ interface NavbarProps {
 export default function Navbar({ onOpenAuth }: NavbarProps) {
   const { user, loading, signOut } = useAuth();
 
-  const displayName =
-    user?.user_metadata?.full_name ||
-    user?.email?.split("@")[0] ||
-    "Citizen";
+  const displayName = user?.name || user?.email?.split("@")[0] || "Citizen";
 
-  const userInitial = (
-    user?.user_metadata?.full_name?.[0] ||
-    user?.email?.[0] ||
-    "C"
-  ).toUpperCase();
+  const userInitial = (user?.name?.[0] || user?.email?.[0] || "C").toUpperCase();
 
   return (
     <header>

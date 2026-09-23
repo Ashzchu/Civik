@@ -1,12 +1,19 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { User, Session, AuthError } from "@supabase/supabase-js";
-import { supabase } from "@/lib/supabase";
+
+export interface CivikUser {
+  s_no: number;
+  email: string;
+  name: string;
+}
+
+export interface AuthError {
+  message: string;
+}
 
 interface AuthContextType {
-  user: User | null;
-  session: Session | null;
+  user: CivikUser | null;
   loading: boolean;
   signInWithPassword: (
     email: string,
@@ -16,103 +23,116 @@ interface AuthContextType {
     email: string,
     password: string,
     fullName: string
-  ) => Promise<{ data: { user: User | null; session: Session | null } | null; error: AuthError | null }>;
-  signInWithGoogle: () => Promise<{ error: AuthError | null }>;
+  ) => Promise<{ user: CivikUser | null; error: AuthError | null }>;
   signOut: () => Promise<{ error: AuthError | null }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState<CivikUser | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     let mounted = true;
 
-    async function getInitialSession() {
+    async function checkAuthSession() {
       try {
-        const { data, error } = await supabase.auth.getSession();
-        if (error) {
-          console.error("Supabase getSession error:", error.message);
-        }
-        if (mounted) {
-          setSession(data.session);
-          setUser(data.session?.user ?? null);
-          setLoading(false);
+        const res = await fetch("/api/auth/me");
+        if (res.ok) {
+          const data = await res.json();
+          if (mounted) {
+            setUser(data.user || null);
+          }
         }
       } catch (err) {
-        console.error("Error getting session:", err);
-        if (mounted) setLoading(false);
+        console.error("Failed to check auth status:", err);
+      } finally {
+        if (mounted) {
+          setLoading(false);
+        }
       }
     }
 
-    getInitialSession();
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, newSession) => {
-      if (mounted) {
-        setSession(newSession);
-        setUser(newSession?.user ?? null);
-        setLoading(false);
-      }
-    });
+    checkAuthSession();
 
     return () => {
       mounted = false;
-      subscription.unsubscribe();
     };
   }, []);
 
   async function signInWithPassword(email: string, password: string) {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    return { error };
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        return { error: { message: data.error || "Failed to sign in." } };
+      }
+
+      setUser(data.user);
+      return { error: null };
+    } catch (err) {
+      return {
+        error: {
+          message: err instanceof Error ? err.message : "Network error during sign-in.",
+        },
+      };
+    }
   }
 
   async function signUp(email: string, password: string, fullName: string) {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: fullName,
-        },
-      },
-    });
-    return { data, error };
-  }
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, name: fullName }),
+      });
 
-  async function signInWithGoogle() {
-    const redirectTo =
-      typeof window !== "undefined" ? window.location.origin : undefined;
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo,
-      },
-    });
-    return { error };
+      const data = await res.json();
+
+      if (!res.ok) {
+        return { user: null, error: { message: data.error || "Failed to register." } };
+      }
+
+      setUser(data.user);
+      return { user: data.user, error: null };
+    } catch (err) {
+      return {
+        user: null,
+        error: {
+          message: err instanceof Error ? err.message : "Network error during registration.",
+        },
+      };
+    }
   }
 
   async function signOut() {
-    const { error } = await supabase.auth.signOut();
-    return { error };
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+      setUser(null);
+      return { error: null };
+    } catch (err) {
+      return {
+        error: {
+          message: err instanceof Error ? err.message : "Failed to sign out.",
+        },
+      };
+    }
   }
 
   return (
     <AuthContext.Provider
       value={{
         user,
-        session,
         loading,
         signInWithPassword,
         signUp,
-        signInWithGoogle,
         signOut,
       }}
     >
