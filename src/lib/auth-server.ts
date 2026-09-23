@@ -76,7 +76,7 @@ export async function getAuthenticatedUser(): Promise<SafeUser | null> {
     const payload = verifySessionToken(sessionCookie.value);
     if (!payload) return null;
 
-    const user = findUserBySNo(payload.s_no);
+    const user = await findUserBySNo(payload.s_no);
     if (!user) return null;
 
     return {

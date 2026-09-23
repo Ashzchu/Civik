@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if user already exists
-    const existingUser = findUserByEmail(email);
+    const existingUser = await findUserByEmail(email);
     if (existingUser) {
       return NextResponse.json(
         { error: "An account with this email already exists." },
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
 
     // Hash password and store in SQLite
     const hashedPassword = hashPassword(password);
-    const newUser = insertUser(email, hashedPassword, name);
+    const newUser = await insertUser(email, hashedPassword, name);
 
     // Create session token
     const token = createSessionToken(newUser.s_no, newUser.email);
