@@ -6,9 +6,14 @@ import { useAuth } from "@/context/AuthContext";
 interface NavbarProps {
   onOpenAuth: (mode: "signin" | "signup") => void;
   onReturnToDashboard?: () => void;
+  onPreviewSanctuary?: () => void;
 }
 
-export default function Navbar({ onOpenAuth, onReturnToDashboard }: NavbarProps) {
+export default function Navbar({
+  onOpenAuth,
+  onReturnToDashboard,
+  onPreviewSanctuary,
+}: NavbarProps) {
   const { user, loading, signOut } = useAuth();
 
   const displayName = user?.name || user?.email?.split("@")[0] || "Citizen";
@@ -71,6 +76,22 @@ export default function Navbar({ onOpenAuth, onReturnToDashboard }: NavbarProps)
             </>
           ) : (
             <>
+              {onPreviewSanctuary && (
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  style={{
+                    padding: "10px 18px",
+                    fontSize: "13.5px",
+                    background: "linear-gradient(135deg, #14b8a6, #0284c7)",
+                    boxShadow: "0 0 16px rgba(45, 212, 191, 0.4)",
+                  }}
+                  onClick={onPreviewSanctuary}
+                  title="Preview Flow Sanctuary Dashboard as Dante (megatasticgaming@gmail.com)"
+                >
+                  Sanctuary Dashboard 🛶
+                </button>
+              )}
               <button
                 type="button"
                 className="btn btn-secondary"

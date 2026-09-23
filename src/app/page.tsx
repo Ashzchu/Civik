@@ -20,6 +20,7 @@ export default function Home() {
   const [authOpen, setAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"signin" | "signup">("signin");
   const [viewLandingOnly, setViewLandingOnly] = useState(false);
+  const [previewMode, setPreviewMode] = useState(false);
 
   function handleOpenAuth(mode: "signin" | "signup") {
     setAuthMode(mode);
@@ -34,9 +35,17 @@ export default function Home() {
     setAuthMode(mode);
   }
 
-  // If user is authenticated and not specifically previewing the landing page, render Flow Sanctuary Dashboard
-  if (!loading && user && !viewLandingOnly) {
-    return <UserDashboard onToggleViewLanding={() => setViewLandingOnly(true)} />;
+  // If user is authenticated or in preview mode, and not exploring landing page, render Flow Sanctuary Dashboard
+  const shouldShowDashboard = (!loading && user && !viewLandingOnly) || (previewMode && !viewLandingOnly);
+
+  if (shouldShowDashboard) {
+    return (
+      <UserDashboard
+        onToggleViewLanding={() => {
+          setViewLandingOnly(true);
+        }}
+      />
+    );
   }
 
   return (
@@ -48,7 +57,18 @@ export default function Home() {
         {/* Navbar */}
         <Navbar
           onOpenAuth={handleOpenAuth}
-          onReturnToDashboard={user ? () => setViewLandingOnly(false) : undefined}
+          onReturnToDashboard={
+            user || previewMode
+              ? () => {
+                  setViewLandingOnly(false);
+                  setPreviewMode(true);
+                }
+              : undefined
+          }
+          onPreviewSanctuary={() => {
+            setPreviewMode(true);
+            setViewLandingOnly(false);
+          }}
         />
 
         {/* Hero Section */}

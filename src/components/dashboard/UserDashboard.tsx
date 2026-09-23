@@ -114,8 +114,14 @@ export default function UserDashboard({ onToggleViewLanding }: UserDashboardProp
     }, 4000);
   }
 
-  const userInitial = (user?.name?.[0] || user?.email?.[0] || "G").toUpperCase();
-  const displayName = user?.name || user?.email?.split("@")[0] || "Guardian";
+  const effectiveUser = user || {
+    s_no: 1,
+    email: "megatasticgaming@gmail.com",
+    name: "Dante",
+  };
+
+  const userInitial = (effectiveUser.name?.[0] || effectiveUser.email?.[0] || "D").toUpperCase();
+  const displayName = effectiveUser.name || effectiveUser.email?.split("@")[0] || "Dante";
 
   return (
     <div className="flow-dashboard-root">
@@ -259,7 +265,7 @@ export default function UserDashboard({ onToggleViewLanding }: UserDashboardProp
           <>
             {/* Sanctuary Hero Banner */}
             <DashboardHeader
-              user={user}
+              user={effectiveUser}
               cpBalance={cpBalance}
               activeCompanion={activeCompanion}
               onExploreQuests={() => setActiveTab("quests")}
