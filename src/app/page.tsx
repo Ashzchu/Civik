@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { useAuth } from "@/context/AuthContext";
 import Navbar from "@/components/layout/Navbar";
 import HeroSection from "@/components/landing/HeroSection";
 import PillarsSection from "@/components/landing/PillarsSection";
@@ -12,15 +11,10 @@ import DownloadCta from "@/components/landing/DownloadCta";
 import Footer from "@/components/layout/Footer";
 import AuthModal from "@/components/auth/AuthModal";
 import BackgroundEmojiLayer from "@/components/layout/BackgroundEmojiLayer";
-import UserDashboard from "@/components/dashboard/UserDashboard";
 
 export default function Home() {
-  const { user, loading } = useAuth();
-
   const [authOpen, setAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"signin" | "signup">("signin");
-  const [viewLandingOnly, setViewLandingOnly] = useState(false);
-  const [previewMode, setPreviewMode] = useState(false);
 
   function handleOpenAuth(mode: "signin" | "signup") {
     setAuthMode(mode);
@@ -35,19 +29,6 @@ export default function Home() {
     setAuthMode(mode);
   }
 
-  // If user is authenticated or in preview mode, and not exploring landing page, render Flow Sanctuary Dashboard
-  const shouldShowDashboard = (!loading && user && !viewLandingOnly) || (previewMode && !viewLandingOnly);
-
-  if (shouldShowDashboard) {
-    return (
-      <UserDashboard
-        onToggleViewLanding={() => {
-          setViewLandingOnly(true);
-        }}
-      />
-    );
-  }
-
   return (
     <main>
       {/* Background Emoji Ambient Layer */}
@@ -55,21 +36,7 @@ export default function Home() {
 
       <div className="container">
         {/* Navbar */}
-        <Navbar
-          onOpenAuth={handleOpenAuth}
-          onReturnToDashboard={
-            user || previewMode
-              ? () => {
-                  setViewLandingOnly(false);
-                  setPreviewMode(true);
-                }
-              : undefined
-          }
-          onPreviewSanctuary={() => {
-            setPreviewMode(true);
-            setViewLandingOnly(false);
-          }}
-        />
+        <Navbar onOpenAuth={handleOpenAuth} />
 
         {/* Hero Section */}
         <HeroSection />
