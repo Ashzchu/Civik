@@ -5,15 +5,9 @@ import { useAuth } from "@/context/AuthContext";
 
 interface NavbarProps {
   onOpenAuth: (mode: "signin" | "signup") => void;
-  onReturnToDashboard?: () => void;
-  onPreviewSanctuary?: () => void;
 }
 
-export default function Navbar({
-  onOpenAuth,
-  onReturnToDashboard,
-  onPreviewSanctuary,
-}: NavbarProps) {
+export default function Navbar({ onOpenAuth }: NavbarProps) {
   const { user, loading, signOut } = useAuth();
 
   const displayName = user?.name || user?.email?.split("@")[0] || "Citizen";
@@ -47,20 +41,6 @@ export default function Navbar({
         <div className="nav-actions">
           {!loading && user ? (
             <>
-              {onReturnToDashboard && (
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  style={{
-                    padding: "8px 16px",
-                    fontSize: "13px",
-                    background: "linear-gradient(135deg, #14b8a6, #0284c7)",
-                  }}
-                  onClick={onReturnToDashboard}
-                >
-                  Sanctuary 🛶
-                </button>
-              )}
               <div className="nav-user-pill" title={user.email || ""}>
                 <div className="nav-user-avatar">{userInitial}</div>
                 <span className="nav-user-name">{displayName}</span>
@@ -76,22 +56,6 @@ export default function Navbar({
             </>
           ) : (
             <>
-              {onPreviewSanctuary && (
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  style={{
-                    padding: "10px 18px",
-                    fontSize: "13.5px",
-                    background: "linear-gradient(135deg, #14b8a6, #0284c7)",
-                    boxShadow: "0 0 16px rgba(45, 212, 191, 0.4)",
-                  }}
-                  onClick={onPreviewSanctuary}
-                  title="Preview Flow Sanctuary Dashboard as Dante (megatasticgaming@gmail.com)"
-                >
-                  Sanctuary Dashboard 🛶
-                </button>
-              )}
               <button
                 type="button"
                 className="btn btn-secondary"
