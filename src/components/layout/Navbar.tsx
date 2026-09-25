@@ -34,6 +34,9 @@ export default function Navbar({ onOpenAuth }: NavbarProps) {
             <a href="#how-it-works">How It Works</a>
           </li>
           <li>
+            <a href="#ranks">Ranks</a>
+          </li>
+          <li>
             <a href="#screens">App Experience</a>
           </li>
         </ul>

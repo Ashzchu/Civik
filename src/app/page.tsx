@@ -6,6 +6,7 @@ import HeroSection from "@/components/landing/HeroSection";
 import PillarsSection from "@/components/landing/PillarsSection";
 import QuestSimulator from "@/components/landing/QuestSimulator";
 import HowItWorks from "@/components/landing/HowItWorks";
+import RanksSection from "@/components/landing/RanksSection";
 import AppGallery from "@/components/landing/AppGallery";
 import DownloadCta from "@/components/landing/DownloadCta";
 import Footer from "@/components/layout/Footer";
@@ -49,6 +50,9 @@ export default function Home() {
 
         {/* 3-Step Walkthrough */}
         <HowItWorks />
+
+        {/* 10-Tier Civic Ranks Ascending Bar Graph */}
+        <RanksSection />
 
         {/* App Screens Carousel */}
         <AppGallery />
